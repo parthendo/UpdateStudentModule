@@ -60,6 +60,86 @@ function previewFile() {
 }
 
 function update(){
+    var name = document.getElementById("firstName");
+    var middle=document.getElementById("middleName");
+    var last=document.getElementById("lastName");
+    var roll =document.getElementById("rollNumber");
+    var email =document.getElementById("emailId");
+   //regular expression
+    var alphaExp = /^[a-zA-Z]+$/;
+    var numExp=/^[0-9]+$/;
+    var emailExp =/^[a-zA-Z0-9]+\.[a-zA-Z0-9]+@iiitb.org$/;
+    //current year fetch
+    var d = new Date();
+    var n=d.getFullYear();
+    //check first name, lastname, middlename check
+    if(!name.value.match(alphaExp)){
+        window.alert('First Name cannot be numeric');
+        location.reload(true);
+        return ;
+    }
+    if(!(middle.value.match(alphaExp)||middle.value.length==0)){
+        window.alert('middle Name cannot be numeric');
+        location.reload(true);
+        return ;
+    }
+    if(!(last.value.match(alphaExp)||last.value.length==0)){
+        window.alert('last Name cannot be numeric');
+        location.reload(true);
+        return;
+    }
+    //check email format
+    if(!email.value.match(emailExp)){
+        window.alert('Email cannot be without @iiitb.org');
+        location.reload(true);
+        return ;
+    }
+    //check roll number format
+    if(roll.value.length!=9&&roll.value.length!=10){
+        window.alert('Roll number is not in format');
+        location.reload(true);
+        return ;
+    }
+    if(roll.value.length==9){
+        var dom = roll.value.slice(0,2);
+        var year= roll.value.slice(2,6);
+        var digit= roll.value.slice(6,9);
+        if(dom!="MT"||dom!="MS"){
+            window.alert('Roll number is not in format');
+            location.reload(true);
+            return ;
+        }
+        if(!(year.match(numExp)|| year<"2000"||year>=n.toString())) {
+            window.alert('Roll number is not in format');
+            location.reload(true);
+            return;
+        }
+        if(!digit.match(numExp)){
+            window.alert('Roll number is not in format');
+            location.reload(true);
+            return;
+        }
+    }
+    if(roll.value.length==10){
+        var dom = roll.value.slice(0,3);
+        var year= roll.value.slice(3,7);
+        var digit= roll.value.slice(7,10);
+        if(dom!="IMT"){
+            window.alert('Roll number is not in format');
+            location.reload(true);
+            return ;
+        }
+        if(!(year.match(numExp)&& year>"2000"&&year<=n.toString())) {
+            window.alert('Roll number is not in format');
+            location.reload(true);
+            return;
+        }
+        if(!digit.match(numExp)){
+            window.alert('Roll number is not in format');
+            location.reload(true);
+            return;
+        }
+    }
     var form = $('#admission-form')[0];
     var data = new FormData(form);
     $.ajax({
